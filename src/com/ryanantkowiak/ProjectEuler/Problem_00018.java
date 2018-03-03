@@ -1,5 +1,6 @@
 package com.ryanantkowiak.ProjectEuler;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,24 +54,12 @@ public class Problem_00018
 		public Node right = null;
 	}
 
-	static class IntPair
-	{
-		public IntPair(final int a, final int b)
-		{
-			this.a = a;
-			this.b = b;
-		}
-
-		public int a;
-		public int b;
-	}
-
-	public static Map<Integer, IntPair> indexToRowColumn = null;
+	public static Map<Integer, Point> indexToRowColumn = null;
 	public static Map<String, Integer> rowColumnToIndex = null;
 
 	public static void initStaticMaps(final int maxLevels)
 	{
-		indexToRowColumn = new HashMap<Integer, IntPair>();
+		indexToRowColumn = new HashMap<Integer, Point>();
 		rowColumnToIndex = new HashMap<String, Integer>();
 
 		// pre-compute maps for indexing into the flat array
@@ -86,7 +75,7 @@ public class Problem_00018
 
 				index += col;
 
-				indexToRowColumn.put(index, new IntPair(row, col));
+				indexToRowColumn.put(index, new Point(row, col));
 				rowColumnToIndex.put("" + row + "-" + col, index);
 			}
 		}
@@ -94,24 +83,24 @@ public class Problem_00018
 
 	public static int getLeftChildIndex(int n)
 	{
-		IntPair ip = indexToRowColumn.get(n);
+		Point p = indexToRowColumn.get(n);
 
-		if (ip == null)
+		if (p == null)
 			return -1;
 
-		String leftChildRowColStr = "" + (ip.a + 1) + "-" + (ip.b);
+		String leftChildRowColStr = "" + (p.x + 1) + "-" + (p.y);
 
 		return rowColumnToIndex.get(leftChildRowColStr);
 	}
 
 	public static int getRightChildIndex(int n)
 	{
-		IntPair ip = indexToRowColumn.get(n);
+		Point p = indexToRowColumn.get(n);
 
-		if (ip == null)
+		if (p == null)
 			return -1;
 
-		String rightChildRowColStr = "" + (ip.a + 1) + "-" + (ip.b + 1);
+		String rightChildRowColStr = "" + (p.x + 1) + "-" + (p.y + 1);
 
 		return rowColumnToIndex.get(rightChildRowColStr);
 	}
